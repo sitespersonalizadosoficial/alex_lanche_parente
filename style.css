@@ -410,41 +410,33 @@ header h1 {
   position: fixed;
   top: 15px;
   right: 15px;
-  background: #ffc107;
+  background: linear-gradient(145deg, #b8980c, #f5dc77);
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  box-shadow: 0 4px 15px rgb(255 193 7 / 0.7);
+  box-shadow: 0 4px 12px rgba(216, 207, 168, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   z-index: 1100;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 #cart-icon:hover {
-  background: #e6b007;
+  background: linear-gradient(145deg, #d4b21a, #b49e55);
+  box-shadow: 0 4px 14px rgba(153, 135, 53, 0.6);
 }
 
 #cart-icon svg {
   width: 28px;
   height: 28px;
-  fill: #000;
+  fill: #111;
 }
 
 #cart-count {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: #000;
-  color: #ffc107;
-  font-weight: 900;
-  font-size: 0.85rem;
-  padding: 3px 7px;
-  border-radius: 50%;
-  user-select: none;
-  display: none;
+  background: #111;
+  color: #d8cfa8;
 }
 
 main {
@@ -783,3 +775,5 @@ input[type="text"]:focus {
     height: 24px;
   }
 }
+
+
