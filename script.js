@@ -5,17 +5,20 @@ const cartItems = document.getElementById('cart-items');
 const cartCount = document.getElementById('cart-count');
 const mainContent = document.querySelector('main');
 const checkoutBtn = document.getElementById('checkout-btn');
-const deliveryRadio = document.querySelector('input[name="pickup"][value="delivery"]');
 const deliveryAddress = document.getElementById('delivery-address');
 const addressInput = document.getElementById('address');
-let cart = [];
+const trocoContainer = document.getElementById('troco-container');
+const trocoInput = document.getElementById('troco');
 
 // ===== Carrinho =====
-cartIcon.addEventListener('click', () => {
+let cart = [];
+
+cartIcon?.addEventListener('click', () => {
   cartPanel.classList.toggle('open');
   cartPanel.setAttribute('aria-hidden', !cartPanel.classList.contains('open'));
   mainContent?.classList.toggle('shifted');
 });
+
 cartClose?.addEventListener('click', () => cartIcon.click());
 
 function updateCart() {
@@ -38,6 +41,7 @@ function updateCart() {
       `;
       cartItems.appendChild(div);
     });
+
     const totalDiv = document.createElement('div');
     totalDiv.style.marginTop = '10px';
     totalDiv.style.fontWeight = '900';
@@ -82,12 +86,28 @@ document.querySelectorAll('.btn-add').forEach(btn => {
   });
 });
 
-// ===== Mostrar campo de endereço =====
+// ===== Mostrar campo de endereço e troco =====
 document.querySelectorAll('input[name="pickup"]').forEach(radio => {
-  radio.addEventListener('change', e => {
-    deliveryAddress.style.display = e.target.value === 'delivery' ? 'block' : 'none';
-  });
+  radio.addEventListener('change', toggleFields);
 });
+document.querySelectorAll('input[name="payment"]').forEach(radio => {
+  radio.addEventListener('change', toggleFields);
+});
+
+function toggleFields() {
+  const pickup = document.querySelector('input[name="pickup"]:checked')?.value || '';
+  const payment = document.querySelector('input[name="payment"]:checked')?.value || '';
+
+  // Mostrar campo de endereço se for delivery
+  if (deliveryAddress) {
+    deliveryAddress.style.display = pickup === 'delivery' ? 'block' : 'none';
+  }
+
+  // Mostrar campo de troco se for dinheiro
+  if (trocoContainer) {
+    trocoContainer.style.display = payment === 'dinheiro' ? 'block' : 'none';
+  }
+}
 
 // ===== Finalizar pedido via WhatsApp =====
 checkoutBtn?.addEventListener('click', () => {
@@ -95,8 +115,12 @@ checkoutBtn?.addEventListener('click', () => {
     alert('Seu carrinho está vazio!');
     return;
   }
+
   const payment = document.querySelector('input[name="payment"]:checked')?.value || '';
   const pickup = document.querySelector('input[name="pickup"]:checked')?.value || '';
+  const troco = trocoInput?.value.trim() || '';
+  const endereco = addressInput?.value.trim() || '';
+
   let message = 'Olá, gostaria de fazer o pedido:%0A';
   cart.forEach(item => {
     message += `- ${item.name} - R$ ${parseFloat(item.price).toFixed(2)}%0A`;
@@ -105,9 +129,15 @@ checkoutBtn?.addEventListener('click', () => {
   message += `Total: R$ ${total.toFixed(2)}%0A`;
   message += `Pagamento: ${payment || '-'}%0A`;
   message += `Retirada: ${pickup || '-'}%0A`;
+
   if (pickup === 'delivery') {
-    message += `Endereço: ${addressInput.value || '-'}%0A`;
+    message += `Endereço: ${endereco || '-'}%0A`;
   }
+
+  if (payment === 'dinheiro' && troco) {
+    message += `Precisa de troco para: R$ ${troco}%0A`;
+  }
+
   window.open(`https://wa.me/5511999999999?text=${message}`, '_blank');
 });
 
@@ -116,12 +146,11 @@ checkoutBtn?.addEventListener('click', () => {
 /* ============================= */
 const menuLinks = document.querySelectorAll('.menu-scroll a');
 
-// Destacar link ativo conforme a rolagem
 window.addEventListener('scroll', () => {
   let fromTop = window.scrollY + 120;
   menuLinks.forEach(link => {
     const href = link.getAttribute('href');
-    if (!href || !href.startsWith('#')) return; // ignora links externos
+    if (!href || !href.startsWith('#')) return;
     const section = document.querySelector(href);
     if (!section) return;
     if (section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
@@ -131,7 +160,6 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Scroll suave apenas para âncoras internas
 menuLinks.forEach(link => {
   link.addEventListener('click', e => {
     const href = link.getAttribute('href');
@@ -139,12 +167,11 @@ menuLinks.forEach(link => {
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) {
-        const offset = 80; // altura do header
+        const offset = 80;
         const targetPos = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: targetPos, behavior: 'smooth' });
       }
     }
-    // se for link externo (ex: patrocio.html), deixa seguir normalmente
   });
 });
 
@@ -153,17 +180,10 @@ menuLinks.forEach(link => {
 /* ============================= */
 const btnTop = document.getElementById('btn-top');
 
-// Mostrar ou esconder o botão conforme a rolagem
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    btnTop.style.display = 'flex';
-  } else {
-    btnTop.style.display = 'none';
-  }
+  btnTop.style.display = window.scrollY > 400 ? 'flex' : 'none';
 });
 
-// Rolar suavemente até o topo
-btnTop.addEventListener('click', () => {
+btnTop?.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-
