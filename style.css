@@ -2,6 +2,99 @@
   box-sizing: border-box;
 }
 
+/* Campo de troco */
+#troco-container {
+  display: none;
+  margin-top: 10px;
+}
+
+/* Grupo de botões estilizados */
+.radio-group.styled {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.radio-group.styled label {
+  background-color: #2c2c2c;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.radio-group.styled input[type="radio"] {
+  display: none;
+}
+
+.radio-group.styled input[type="radio"]:checked + label,
+.radio-group.styled label:has(input[type="radio"]:checked) {
+  background-color: #ffc107;
+  color: #000;
+  border-color: #000;
+}
+
+/* Estilização dos campos de input */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+/* Botão Finalizar Pedido */
+.btn-finalizar {
+  background-color: #ffc107;
+  color: #000;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s ease;
+}
+
+.btn-finalizar:hover {
+  background-color: #e0ac00;
+}
+
+
+#troco-container label {
+  font-weight: 700;
+  color: #ffc107;
+  margin-bottom: 6px;
+  display: block;
+}
+
+#troco-container input {
+  background: #222;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  width: 100%;
+}
+
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -410,7 +503,7 @@ header h1 {
   position: fixed;
   top: 15px;
   right: 15px;
-  background: linear-gradient(145deg, #b8980c, #f5dc77);
+  background: linear-gradient(145deg, #b8980c, #ecbf08);
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -436,7 +529,7 @@ header h1 {
 
 #cart-count {
   background: #111;
-  color: #d8cfa8;
+  color: #a89c64;
 }
 
 main {
@@ -556,7 +649,8 @@ section h2 {
   max-width: 90%;
   height: 100vh;
   background: rgba(17,17,17,0.95);
-  box-shadow: -4px 0 12px rgb(255 193 7 / 0.9);
+  box-shadow: -4px 0 12px 
+  rgba(151, 123, 38, 0.9);
   padding: 20px;
   transition: right 0.4s ease;
   display: flex;
